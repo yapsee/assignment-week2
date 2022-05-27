@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SchoolManagementService } from '../school-management.service';
 
 @Component({
   selector: 'app-classes-details',
@@ -11,24 +12,21 @@ export class ClassesDetailsComponent implements OnInit {
   formUpdateActived : boolean = false;
   formAddActived : boolean = false;
 
-  students = [
-    { id: 1, firstName: "Hawa",  lastName: "Ba", class: "Seconde L2b"},
-    { id: 2, firstName: "Amadou",  lastName: "Tall", class: "Seconde L1a"},
-    {  id: 45, firstName: "Yves",  lastName: "Amar", class: "Seconde S2b" },
-    {  id: 4, firstName: "Rosale",  lastName: "Sy", class: "Premiere S1a" },
-    {id: 5, firstName: "kalsoum ",  lastName: "Mbacke", class: "Terminale L2c"}
-  ];
+  students = [];
   selectedClass: string;
   task_: {};
   lastName: string;
   firstName: string;
   class: string;
 
-  constructor(private route: ActivatedRoute, router: Router) { }
+  constructor(private route: ActivatedRoute, router: Router, private school_service : SchoolManagementService) { 
+    this.students =  this.school_service.getAllStudents();
+  }
 
   ngOnInit() {
 
     this.selectedClass = this.route.snapshot.paramMap.get('name')!
+    this.students =  this.school_service.getAllStudents();
     console.log('====class====', this.selectedClass.toString() )
     this.filterStudents();
   }
@@ -53,7 +51,7 @@ export class ClassesDetailsComponent implements OnInit {
 
   }
   changeStudent(id){
-    this.students.push({ lastName: this.lastName,  id, firstName: this.firstName , class: this.class});
+    this.school_service.updateStudent(this.firstName, this.lastName, id, this.class);
     this.formUpdateActived = false;
   }
   openSudentAdd(){
@@ -64,7 +62,7 @@ export class ClassesDetailsComponent implements OnInit {
   addStudent(){
     const lastIndex = this.students.length - 1;
     const id = this.students[lastIndex].id + 1;
-    this.students.push({ lastName: this.lastName,  id, firstName: this.firstName , class : this.selectedClass});
+   this.school_service.addStudent(this.firstName, this.lastName, id, this.selectedClass);
     this.filterStudents();
     this.formAddActived = false;
   }
