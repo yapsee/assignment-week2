@@ -1,5 +1,16 @@
 # AssignmentWeek
 
+## Navigation
+
+The path '' redirect to students list
+
+In navbar there is 2 links and the 'All classes' redirect to the classes page
+You can add a new class by clicking the button 'Add class'
+You can view class details by clicking class name. its a redirection to class details page
+
+On class details page you can add a new student to that class or update student details 
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.29.
 
 ## Development server
