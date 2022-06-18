@@ -55,7 +55,7 @@ export class ClassesDetailsComponent implements OnInit {
   getClassId(selectedClass?: string) {
     this.school_service.fetchClasses().subscribe(data => {
       this.selectedClassId = data.filter((class_) => class_.name == this.selectedClass)[0]._id;
-      console.log('====CLASSID===',  this.selectedClassId )
+      //console.log('====CLASSID===',  this.selectedClassId )
     }
     );
   }
