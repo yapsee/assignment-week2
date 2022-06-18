@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { SchoolManagementService } from '../school-management.service';
 
 @Component({
@@ -9,25 +10,33 @@ import { SchoolManagementService } from '../school-management.service';
 export class ClassesListComponent implements OnInit {
   name: string;
   formActived: boolean = false;
+  classes: any;
+  
 
-  constructor(private school_service : SchoolManagementService) { }
+  constructor(private school_service : SchoolManagementService, private router: Router) { }
 
   ngOnInit() {
+    this.getData();
   }
 
-  classes = this.school_service.getAllClasses()
+
+  getData() {
+    this.school_service.fetchClasses().subscribe(response => {
+      console.log('====response====', response)
+      this.classes = response;
+    });
+  }
+
 
   openClassAdd(){
     this.formActived = true;
   }
 
-  addClass() {
-   
-    const lastIndex = this.classes.length - 1;
-     const id = this.classes[lastIndex].id + 1;
-    this.school_service.addClass(this.name, id)
-    this.formActived = false;
+  addClass(){
+    this.school_service.addClass(this.name).subscribe(response => {
+      this.router.navigate(['classes/details/' + this.name]);
+    });
+     
   }
 
 }
-

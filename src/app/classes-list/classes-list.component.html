@@ -23,7 +23,7 @@
   <tbody>
     <tr *ngFor="let class of classes">
      
-      <td>{{ class.id }}</td>
+      <td>{{ class._id }}</td>
       <td> {{ class.name }}</td>
       <td> <button class="btn btn-success" [routerLink]="['/classes/details', class.name]">Check class details</button></td>
     </tr>

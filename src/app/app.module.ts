@@ -10,6 +10,7 @@ import {MatTableModule} from '@angular/material/table';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ClassesDetailsComponent } from './classes-details/classes-details.component';
 import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatToolbarModule } from '@angular/material';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, Ma
     MatTableModule,
     MatToolbarModule,
     MatIconModule,
+    HttpClientModule,
    
   ],
   providers: [],

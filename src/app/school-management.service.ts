@@ -1,44 +1,51 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SchoolManagementService {
-
-  constructor() { }
-
-  students = [
-    { id: 1, firstName: "Hawa",  lastName: "Ba", class: "Seconde L2b"},
-    { id: 2, firstName: "Amadou",  lastName: "Tall", class: "Seconde L1a"},
-    {  id: 3, firstName: "Yves",  lastName: "Amar", class: "Seconde S2b" },
-    {  id: 4, firstName: "Rosale",  lastName: "Sy", class: "Premiere S1a" },
-    {id: 5, firstName: "kalsoum ",  lastName: "Mbacke", class: "Terminale L2c"}
-  ];
-
-  classes = [
-    { id: 1 ,name: "Seconde L2b"},
-    {id: 5, name: "Terminale L1a"}
-  ];
-
-  getAllStudents(){
-    return this.students
+   url = 'http://localhost:4000';
+ 
+  constructor(private httpClient: HttpClient) { 
   }
 
-  getAllClasses(){
-    return this.classes
+
+ 
+   fetchStudents() : Observable<any>{
+    return this.httpClient.get(this.url+ '/students');
   }
 
-  addClass(name, id){
-    return this.classes.push({ name: name,  id});
+  fetchClasses() : Observable<any>{
+    return this.httpClient.get(this.url + '/classes');
+
   }
 
-  addStudent(firstname,lastname, id, classe){
-   this.students.push({ firstName: firstname, lastName: lastname, id, class: classe });
+  addStudent(firstname: string,lastname:string, classe:string): Observable<any>{
+    console.log('====STUDENT===',  firstname , lastname, classe)
+    return this.httpClient.post(this.url + '/students', { "firstName": firstname, "lastName": lastname, "classId": classe });
   }
 
-  updateStudent(firstname,lastname, id, classe){
-    this.students.push({ firstName: firstname, lastName: lastname, id, class: classe });
-   }
+  addClass(name): Observable<any> {
+     return this.httpClient.post(this.url + '/classes', { "name": name });
+  }
+
+  deleteStudent(id): Observable<any> {
+    return this.httpClient.delete(this.url + '/students/' + id);
+  }
+
+  updateStudent(id, firstname: string, lastname:string, classe:string): Observable<any>{
+    console.log('====TASK===', id, firstname, lastname, classe)
+    return this.httpClient.put(this.url + '/students/' + id, { "firstName": firstname, "lastName": lastname, "classId": classe });
+  }
+
+
+  
+
+  // updateStudent(firstname,lastname, id, classe){
+  //   this.students.push({ firstName: firstname, lastName: lastname, id, class: classe });
+  //  }
 
 
 }
